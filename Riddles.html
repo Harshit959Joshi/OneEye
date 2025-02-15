@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>Riddles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #2c3e50;
+      flex-direction: column;
+      color: #ecf0f1;
+    }
+
+    .game-container {
+      background: #34495e;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ecf0f1;
+      margin-bottom: 20px;
+    }
+
+    .riddle {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .answer-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px;
+      background-color: #16a085;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #1abc9c;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    .happy-emoji {
+      font-size: 2rem;
+      color: green;
+      display: none;
+    }
+
+    .sad-emoji {
+      font-size: 2rem;
+      color: red;
+      display: none;
+    }
+
+    /* Paper cracker animation */
+    .cracker {
+      position: absolute;
+      display: none;
+      width: 150px;
+      height: 150px;
+      background-image: url('https://cdn.pixabay.com/photo/2017/12/11/15/00/cracker-3013239_960_720.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: blowUp 1s forwards;
+    }
+
+    @keyframes blowUp {
+      0% { transform: scale(0); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <h1>Riddle </h1>
+    <div class="riddle" id="riddle">Loading...</div>
+    
+    <div class="answer-buttons" id="answer-buttons">
+      <!-- Dynamic buttons will appear here -->
+    </div>
+    
+    <div class="message" id="message"></div>
+    <div class="happy-emoji" id="happy-emoji">😊</div>
+    <div class="sad-emoji" id="sad-emoji">😢</div>
+    <div class="cracker" id="cracker"></div>
+  </div>
+
+  <script>
+    const riddles = [
+      { question: "What has hands but can’t clap?", options: ["Clock", "Tree", "Human", "Car"], answer: "Clock" },
+      { question: "What has a face but can’t see?", options: ["Clock", "Sun", "Mirror", "Person"], answer: "Clock" },
+      { question: "What is orange and sounds like a parrot?", options: ["Carrot", "Apple", "Banana", "Mango"], answer: "Carrot" },
+      { question: "What goes up but never comes down?", options: ["Age", "Ball", "Smoke", "Rocket"], answer: "Age" },
+      { question: "What has keys but can’t open locks?", options: ["Piano", "Computer", "Map", "Car"], answer: "Piano" },
+      { question: "What has a head, a tail, but no body?", options: ["Coin", "Snake", "Human", "Scissors"], answer: "Coin" },
+      { question: "I am tall when I am young, and I am short when I am old. What am I?", options: ["Candle", "Tree", "Building", "Pen"], answer: "Candle" },
+      { question: "What can travel around the world while staying in the corner?", options: ["Postage Stamp", "Book", "Bird", "Plane"], answer: "Postage Stamp" },
+      { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", options: ["The letter 'M'", "The letter 'T'", "The letter 'E'", "The letter 'R'"], answer: "The letter 'M'" },
+      { question: "What has a neck but no head?", options: ["Bottle", "Person", "Tree", "Animal"], answer: "Bottle" },
+      { question: "What can be broken but never held?", options: ["Promise", "Stone", "Glass", "Toy"], answer: "Promise" },
+      { question: "What is full of holes but still holds a lot of weight?", options: ["Sponge", "Rock", "Towel", "Container"], answer: "Sponge" },
+      { question: "What gets wetter as it dries?", options: ["Towel", "Spade", "Shirt", "Brush"], answer: "Towel" },
+      { question: "What can you catch, but not throw?", options: ["Cold", "Fish", "Ball", "Apple"], answer: "Cold" },
+      { question: "What is black when it’s clean and white when it’s dirty?", options: ["Blackboard", "Piano", "Chair", "T-shirt"], answer: "Blackboard" },
+      { question: "What comes down but never goes up?", options: ["Rain", "Ball", "Rock", "Sun"], answer: "Rain" },
+      { question: "What can run but never walks?", options: ["Water", "Human", "Cat", "Ball"], answer: "Water" },
+      { question: "What has a tail but no body?", options: ["Coin", "Snake", "Person", "Bug"], answer: "Coin" },
+      { question: "What has keys but can't open locks?", options: ["Piano", "Computer", "Car", "Map"], answer: "Piano" },
+      { question: "What can be cracked, made, told, and played?", options: ["Joke", "Glass", "Promise", "Box"], answer: "Joke" },
+      { question: "What has a bark but does not bite?", options: ["Tree", "Dog", "Leaf", "Bush"], answer: "Tree" },
+      { question: "What has four legs but can’t walk?", options: ["Table", "Chair", "Cat", "Elephant"], answer: "Table" },
+      { question: "What can you hear but never see?", options: ["Voice", "Sound", "Light", "Air"], answer: "Sound" },
+      { question: "What can be opened but never closed?", options: ["Mind", "Door", "Book", "Box"], answer: "Mind" },
+      { question: "What grows when it eats but dies when it drinks?", options: ["Fire", "Tree", "Plant", "Rock"], answer: "Fire" },
+      { question: "What can fill a room but takes up no space?", options: ["Light", "Air", "Sound", "Water"], answer: "Light" },
+      { question: "What has a tail but no body?", options: ["Coin", "Snake", "Person", "Bug"], answer: "Coin" },
+      { question: "What has many teeth but can’t bite?", options: ["Comb", "Saw", "Chair", "Knife"], answer: "Comb" },
+      { question: "What can be written, but can't be seen?", options: ["Invisible Ink", "Love", "Message", "Secret"], answer: "Invisible Ink" },
+      { question: "What runs without legs?", options: ["Water", "Clock", "Wind", "River"], answer: "Water" },
+      { question: "What is the longest word in the dictionary?", options: ["Smiles", "Pneumonoultramicroscopicsilicovolcanoconiosis", "Supercalifragilisticexpialidocious", "Antidisestablishmentarianism"], answer: "Pneumonoultramicroscopicsilicovolcanoconiosis" }
+    ];
+
+    let currentRiddleIndex = 0;
+
+    // Shuffle the riddles array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+      }
+    }
+
+    // Initialize game
+    function startGame() {
+      shuffleArray(riddles);
+      currentRiddleIndex = 0;
+      showRiddle();
+    }
+
+    // Display the current riddle
+    function showRiddle() {
+      const riddle = riddles[currentRiddleIndex];
+      const riddleText = document.getElementById("riddle");
+      const answerButtons = document.getElementById("answer-buttons");
+      const message = document.getElementById("message");
+      const happyEmoji = document.getElementById("happy-emoji");
+      const sadEmoji = document.getElementById("sad-emoji");
+      const cracker = document.getElementById("cracker");
+
+      riddleText.textContent = riddle.question;
+
+      // Clear previous buttons
+      answerButtons.innerHTML = '';
+
+      // Create new answer buttons
+      riddle.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.classList.add("btn");
+        button.onclick = () => checkAnswer(option, riddle.answer);
+        answerButtons.appendChild(button);
+      });
+
+      message.textContent = '';
+      happyEmoji.style.display = 'none';
+      sadEmoji.style.display = 'none';
+      cracker.style.display = 'none';
+    }
+
+    // Check answer and give feedback
+    function checkAnswer(selected, correctAnswer) {
+      const message = document.getElementById("message");
+      const happyEmoji = document.getElementById("happy-emoji");
+      const sadEmoji = document.getElementById("sad-emoji");
+      const cracker = document.getElementById("cracker");
+
+      if (selected === correctAnswer) {
+        message.textContent = "Correct! 🎉";
+        happyEmoji.style.display = 'block';
+        cracker.style.display = 'block';
+
+        setTimeout(() => {
+          cracker.style.display = 'none';
+          nextRiddle();
+        }, 1500);
+      } else {
+        message.textContent = "Wrong! Try again. 😢";
+        sadEmoji.style.display = 'block';
+        setTimeout(() => {
+          sadEmoji.style.display = 'none';
+        }, 1500);
+      }
+    }
+
+    // Move to the next riddle
+    function nextRiddle() {
+      if (currentRiddleIndex < riddles.length - 1) {
+        currentRiddleIndex++;
+        showRiddle();
+      } else {
+        // If no more riddles, restart the game
+        message.textContent = "Game Over! Let's play again!";
+        setTimeout(startGame, 2000);  // Restart after a short delay
+      }
+    }
+
+    // Start the game
+    startGame();
+  </script>
+
+</body>
+</html>

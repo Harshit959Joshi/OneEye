@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>News - OneEye</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: #1c1c1c;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #4CAF50;
+      transform: translateY(-2px);
+      color: #121212;
+    }
+
+    /* Container */
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      color: #4CAF50;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #9c27b0;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+    }
+
+    /* News Section */
+    .news-posts {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      color: #ddd;
+    }
+
+    .news-post {
+      background-color: #1c1c1c;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .news-post h3 {
+      font-size: 1.8rem;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+
+    .news-post p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .news-post a {
+      color: #9c27b0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .news-post a:hover {
+      color: #4CAF50;
+    }
+
+    footer {
+      background-color: #1c1c1c;
+      color: #bbb;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    /* Responsive Layout */
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .news-posts {
+        font-size: 16px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .news-posts {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div>
+      <a href="Index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="Contact.html">Contact Us</a>
+      <a href="Games.html">Games</a>
+      <a href="Blog.html">Blog</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container">
+    <h1>OneEye News</h1>
+    <h2>Stay Updated with the Latest News</h2>
+
+    <!-- News Posts -->
+    <div class="news-posts">
+
+      <!-- News Post 1 -->
+      <div class="news-post">
+        <h3>Exciting New Features Coming Soon!</h3>
+        <p>
+          We’re constantly working to improve your experience at OneEye. Our upcoming update will bring exciting new features, including enhanced interactivity and more ways to engage with content. Stay tuned for more information!
+        </p>
+      </div>
+
+      <!-- News Post 2 -->
+      <div class="news-post">
+        <h3>OneEye Hits a Milestone: 1 Million Users!</h3>
+        <p>
+          We’re thrilled to announce that OneEye has reached 1 million active users! We’re incredibly grateful for the amazing community that’s been supporting us, and we can’t wait to continue growing with you all.
+        </p>
+      </div>
+
+      <!-- News Post 3 -->
+      <div class="news-post">
+        <h3>Launch of Our New Eye-Popping Games</h3>
+        <p>
+          Get ready for a brand-new gaming experience with OneEye! Our team has been working hard to create eye-popping, fun-filled games that you can enjoy. Check out the latest titles that will challenge your mind and thrill your senses.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025. OneEye. All Rights Reserved. | <a href="Contact.html">Contact Us</a></p>
+  </footer>
+
+</body>
+</html>

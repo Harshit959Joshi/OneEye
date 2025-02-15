@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="One eye.jpg" type="image/x-icon">
+    <title>Mines-OneEye</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2e2e2e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .level-buttons {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .level-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 32px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 220px;
+        }
+
+        .level-buttons button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        .level-buttons button:active {
+            transform: scale(1.05);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(4, 50px);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .block {
+            width: 50px;
+            height: 50px;
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .block.revealed {
+            background-color: #333;
+            cursor: default;
+        }
+
+        .block.mine {
+            background-color: red;
+            font-size: 24px;
+            color: white;
+        }
+
+        .block.safe {
+            background-color: #3e8e41;
+            color: #fff;
+        }
+
+        .block.diamond {
+            color: #FFD700;
+            font-size: 28px;
+        }
+
+        .block:hover {
+            background-color: #555;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        .reset-button {
+            background-color: #FF6347;
+            color: white;
+            padding: 14px 28px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            width: 220px;
+            display: none;
+        }
+
+        .reset-button:hover {
+            background-color: #e55347;
+            transform: scale(1.05);
+        }
+
+        .reset-button:active {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Mines</h1>
+
+    <div class="level-buttons">
+        <button onclick="startGame(1)">Risk</button>
+        <button onclick="startGame(2)">Risk More</button>
+        <button onclick="startGame(3)">Risk Even More</button>
+    </div>
+
+    <div id="game-grid" class="grid hidden"></div>
+    <div id="result" class="result hidden"></div>
+    <button id="reset-button" class="reset-button" onclick="resetGame()">Reset Game</button>
+</div>
+
+<script>
+    let grid = [];
+    let mines = [];
+    let revealedCount = 0;
+    let totalMines = 0;
+    let gameStarted = false;
+
+    const startGame = (riskLevel) => {
+        resetGame();
+        totalMines = getMineCount(riskLevel);
+        grid = createGrid(20); // 20 blocks per level
+        mines = placeMines(totalMines, grid);
+        renderGrid(grid);
+        gameStarted = true;
+        document.getElementById("result").classList.add("hidden");
+        document.getElementById("reset-button").style.display = "block"; // Show reset button
+    };
+
+    const getMineCount = (riskLevel) => {
+        if (riskLevel === 1) return 3;
+        if (riskLevel === 2) return 5;
+        return 8;
+    };
+
+    const createGrid = (size) => {
+        let newGrid = [];
+        for (let i = 0; i < size; i++) {
+            newGrid.push({ isRevealed: false, isMine: false });
+        }
+        return newGrid;
+    };
+
+    const placeMines = (totalMines, grid) => {
+        let minesPlaced = 0;
+        let minePositions = [];
+
+        while (minesPlaced < totalMines) {
+            let randomIndex = Math.floor(Math.random() * grid.length);
+            if (!grid[randomIndex].isMine && !minePositions.includes(randomIndex)) {
+                grid[randomIndex].isMine = true;
+                minePositions.push(randomIndex);
+                minesPlaced++;
+            }
+        }
+
+        return minePositions;
+    };
+
+    const renderGrid = (grid) => {
+        const gameGridElement = document.getElementById("game-grid");
+        gameGridElement.innerHTML = "";
+        gameGridElement.classList.remove("hidden");
+
+        grid.forEach((block, index) => {
+            const blockElement = document.createElement("div");
+            blockElement.classList.add("block");
+            blockElement.addEventListener("click", () => handleBlockClick(index));
+            gameGridElement.appendChild(blockElement);
+        });
+    };
+
+    const handleBlockClick = (index) => {
+        if (!gameStarted || grid[index].isRevealed) return;
+
+        grid[index].isRevealed = true;
+        revealedCount++;
+        const blockElement = document.getElementsByClassName("block")[index];
+
+        if (grid[index].isMine) {
+            blockElement.classList.add("mine");
+            blockElement.textContent = "💣"; // Bomb symbol
+            showGameOver(false);
+        } else {
+            blockElement.classList.add("safe");
+            const adjacentMines = countAdjacentMines(index);
+            if (adjacentMines === 0) {
+                blockElement.classList.add("diamond"); // Diamond symbol for empty block
+                blockElement.textContent = "💎";  // Diamond emoji for empty block
+            } else {
+                blockElement.textContent = adjacentMines;
+            }
+            if (revealedCount === grid.length - totalMines) {
+                showGameOver(true);
+            }
+        }
+    };
+
+    const countAdjacentMines = (index) => {
+        const adjacentIndexes = [
+            index - 1, index + 1, index - 5, index + 5, index - 6, index - 4, index + 4, index + 6
+        ];
+
+        return adjacentIndexes.filter(i => i >= 0 && i < grid.length && mines.includes(i)).length;
+    };
+
+    const showGameOver = (won) => {
+        gameStarted = false;
+        const resultElement = document.getElementById("result");
+        resultElement.classList.remove("hidden");
+        resultElement.textContent = won ? "You won!" : "Game over! You hit a mine.";
+    };
+
+    const resetGame = () => {
+        revealedCount = 0;
+        document.getElementById("game-grid").classList.add("hidden");
+        document.getElementById("result").classList.add("hidden");
+        document.getElementById("reset-button").style.display = "none";
+        gameStarted = false;
+    };
+</script>
+
+</body>
+</html>

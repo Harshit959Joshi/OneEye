@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>Matching Shapes </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f8ff; /* Light blue background */
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #34495e;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      grid-template-rows: repeat(4, 100px);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: #e0f7fa; /* Light cyan */
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped {
+      background-color: #80deea; /* Light teal */
+      transform: rotateY(180deg);
+    }
+
+    .card.matched {
+      background-color: #a5d6a7; /* Light green */
+      cursor: default;
+    }
+
+    #reset-button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #reset-button:hover {
+      background-color: #34495e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Matching Shapes </h1>
+    <p>Match the pairs of shapes to win!</p>
+    <div id="game-board" class="game-board"></div>
+    <button id="reset-button">Reset Game</button>
+  </div>
+
+  <script>
+    const shapes = ['★', '●', '■', '▲', '♥', '♦', '♣', '♠'];
+    const cards = [...shapes, ...shapes]; // Duplicate shapes for matching
+    let flippedCards = [];
+    let matchedCards = [];
+
+    // Shuffle cards
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Create the game board
+    function createBoard() {
+      const gameBoard = document.getElementById('game-board');
+      gameBoard.innerHTML = '';
+      const shuffledCards = shuffle(cards);
+
+      shuffledCards.forEach((shape, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.index = index;
+        card.textContent = shape;
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+      });
+    }
+
+    // Flip a card
+    function flipCard() {
+      if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+        this.classList.add('flipped');
+        flippedCards.push(this);
+
+        if (flippedCards.length === 2) {
+          setTimeout(checkMatch, 500);
+        }
+      }
+    }
+
+    // Check if the flipped cards match
+    function checkMatch() {
+      const [card1, card2] = flippedCards;
+
+      if (card1.textContent === card2.textContent) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        matchedCards.push(card1, card2);
+
+        if (matchedCards.length === cards.length) {
+          alert('Congratulations! You matched all the shapes!');
+        }
+      } else {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+      }
+
+      flippedCards = [];
+    }
+
+    // Reset the game
+    document.getElementById('reset-button').addEventListener('click', () => {
+      flippedCards = [];
+      matchedCards = [];
+      createBoard();
+    });
+
+    // Initialize the game
+    createBoard();
+  </script>
+</body>
+</html>

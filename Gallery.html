@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>Gallery-OneEye</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header */
+    header {
+      background-color: #1c1c1c;
+      width: 100%;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      color: #4CAF50;
+      font-weight: 700;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      border-radius: 30px;
+      background-color: #333;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #4CAF50;
+      transform: translateY(-2px);
+      color: #121212;
+    }
+
+    /* Gallery */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 30px;
+      width: 85%;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      background-color: #333;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .gallery-item img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .gallery-item p {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Button */
+    .game-button {
+      background-color: #4CAF50;
+      padding: 15px 30px;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background-color 0.3s;
+    }
+
+    .game-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1c1c1c;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      color: #bbb;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Responsive Layout */
+    @media screen and (max-width: 768px) {
+      .gallery-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      nav a {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .gallery-container {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to One Eye Sight</h1>
+    <nav>
+      <a href="Index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="Contact.html">Contact Us</a>
+      <a href="Games.html">Games</a>
+      <a href="Blog.html">Blog</a>
+      <a href="News.html">News</a>
+    </nav>
+  </header>
+
+  <div class="gallery-container">
+    <div class="gallery-item">
+      <img src="th (3).jpg" alt="1">
+      <p> 1</p>
+    </div>
+    <div class="gallery-item">
+      <img src="th (4).jpg" alt="2">
+      <p> 2</p>
+    </div>
+    <div class="gallery-item">
+      <img src="th (6).jpg" alt="3">
+      <p> 3</p>
+    </div>
+    <div class="gallery-item">
+      <img src="th (7).jpg" alt="4">
+      <p> 4</p>
+    </div>
+    <div class="gallery-item">
+      <img src="th (8).jpg" alt="5">
+      <p> 5</p>
+    </div>
+    <div class="gallery-item">
+      <img src="One eye.jpg" alt="6">
+      <p> 6</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 OneEye | <a href="Contact.html">Contact Us</a></p>
+  </footer>
+
+</body>
+</html>

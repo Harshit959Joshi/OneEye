@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>Tic Tac Toe</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 5px;
+      width: 300px;
+      height: 300px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-color: #34495e;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ecf0f1;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.3s ease;
+    }
+
+    .cell:hover {
+      background-color: #1abc9c;
+      transform: scale(1.1);
+    }
+
+    .cell.taken {
+      pointer-events: none;
+    }
+
+    .message {
+      font-size: 1.5rem;
+      margin-top: 20px;
+    }
+
+    .reset-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-button:hover {
+      background-color: #16a085;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .game-board {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    .mode-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .mode-buttons button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .mode-buttons button:hover {
+      background-color: #16a085;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tic Tac Toe</h1>
+
+  <div class="mode-buttons">
+    <button id="pvp-button">Play with Friend</button>
+    <button id="pvb-button">Play with Bot</button>
+  </div>
+
+  <div class="game-board" id="game-board">
+    <div class="cell" id="cell-0"></div>
+    <div class="cell" id="cell-1"></div>
+    <div class="cell" id="cell-2"></div>
+    <div class="cell" id="cell-3"></div>
+    <div class="cell" id="cell-4"></div>
+    <div class="cell" id="cell-5"></div>
+    <div class="cell" id="cell-6"></div>
+    <div class="cell" id="cell-7"></div>
+    <div class="cell" id="cell-8"></div>
+  </div>
+  
+  <div class="message" id="message">Choose your game mode</div>
+  <button class="reset-button" id="reset-button">Reset Game</button>
+
+  <script>
+    const cells = document.querySelectorAll('.cell');
+    const message = document.getElementById('message');
+    const resetButton = document.getElementById('reset-button');
+    const gameBoard = document.getElementById('game-board');
+    const pvpButton = document.getElementById('pvp-button');
+    const pvbButton = document.getElementById('pvb-button');
+
+    let currentPlayer = 'X';
+    let board = Array(9).fill(null);
+    let isBotPlaying = false;
+
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    // Switch to PvP mode
+    pvpButton.addEventListener('click', () => {
+      isBotPlaying = false;
+      resetGame();
+      message.textContent = "Player X's turn (Friend vs Friend)";
+    });
+
+    // Switch to PvB mode
+    pvbButton.addEventListener('click', () => {
+      isBotPlaying = true;
+      resetGame();
+      message.textContent = "Player X's turn (Playing with Bot)";
+    });
+
+    // Handle cell click
+    cells.forEach((cell, index) => {
+      cell.addEventListener('click', () => handleCellClick(index));
+    });
+
+    // Handle cell click logic
+    function handleCellClick(index) {
+      if (board[index] !== null || message.textContent.includes('wins')) return; // Ignore if cell is already filled or game over
+
+      board[index] = currentPlayer;
+      cells[index].textContent = currentPlayer;
+      cells[index].classList.add('taken');
+      cells[index].style.pointerEvents = 'none';
+
+      if (checkWin(currentPlayer)) {
+        message.textContent = `${currentPlayer} wins! 🎉`; // Corrected message syntax
+        return;
+      }
+
+      if (board.every(cell => cell !== null)) {
+        message.textContent = "It's a draw! 😕";
+        return;
+      }
+
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      message.textContent = isBotPlaying && currentPlayer === 'O' ? "Bot's turn" : `${currentPlayer}'s turn`;
+
+      // If playing with bot, bot makes a move
+      if (isBotPlaying && currentPlayer === 'O') {
+        setTimeout(botMove, 500); // Add delay before bot plays
+      }
+    }
+
+    // Bot makes a move
+    function botMove() {
+      let availableCells = board.map((cell, index) => cell === null ? index : null).filter(val => val !== null);
+      let randomMove = availableCells[Math.floor(Math.random() * availableCells.length)];
+
+      board[randomMove] = 'O';
+      cells[randomMove].textContent = 'O';
+      cells[randomMove].classList.add('taken');
+      cells[randomMove].style.pointerEvents = 'none';
+
+      if (checkWin('O')) {
+        message.textContent = "Bot wins! 🎉";
+        return;
+      }
+
+      if (board.every(cell => cell !== null)) {
+        message.textContent = "It's a draw! 😕";
+        return;
+      }
+
+      currentPlayer = 'X';
+      message.textContent = "Player X's turn";
+    }
+
+    // Check if the current player has won
+    function checkWin(player) {
+      return winningCombinations.some(combination => {
+        return combination.every(index => board[index] === player);
+      });
+    }
+
+    // Reset the game
+    resetButton.addEventListener('click', resetGame);
+
+    function resetGame() {
+      board = Array(9).fill(null);
+      cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('taken');
+        cell.style.pointerEvents = 'auto';
+      });
+      currentPlayer = 'X';
+      message.textContent = isBotPlaying ? "Player X's turn (Playing with Bot)" : "Player X's turn (Friend vs Friend)";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="One eye.jpg" type="image/x-icon">
+  <title>OneEye</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    nav {
+      background: #1c1c1c;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    nav a, nav button {
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      margin: 0 15px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    nav a:hover, nav button:hover {
+      background-color: #4CAF50;
+      transform: translateY(-2px);
+      color: #121212;
+    }
+
+    nav button {
+      cursor: pointer;
+      background: #4CAF50;
+      border: none;
+    }
+
+    nav button:focus {
+      outline: none;
+    }
+
+    /* Container */
+    .container {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    h1 {
+      color: #4CAF50;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    /* Eye Animation Container */
+    .eye-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      margin: 50px auto;
+      perspective: 1000px;
+    }
+
+    .eye {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #fff 20%, #0a0a0a 80%);
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+      animation: eye-animation 4s infinite alternate;
+      transform-style: preserve-3d;
+      transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    @keyframes eye-animation {
+      0% {
+        transform: rotateX(10deg) rotateY(10deg);
+      }
+      100% {
+        transform: rotateX(-10deg) rotateY(-10deg);
+      }
+    }
+
+    .pupil {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30%;
+      height: 30%;
+      background-color: #333;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s;
+    }
+
+    footer {
+      background: #1c1c1c;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .eye-container {
+        width: 200px;
+        height: 200px;
+      }
+
+      .eye {
+        width: 100%;
+        height: 100%;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .eye-container {
+        width: 150px;
+        height: 150px;
+      }
+
+      .eye {
+        width: 100%;
+        height: 100%;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div>
+      <a href="Home.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="Contact.html">Contact Us</a>
+      <a href="Games.html">Games</a>
+      <a href="Blog.html">Blog</a>
+      <a href="News.html">News</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome to One Eye Sight</h1>
+    <p>Experience the world from a new perspective</p>
+   
+    <!-- Eye Animation -->
+    <div class="eye-container">
+      <div class="eye">
+        <div class="pupil" id="pupil"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025. OneEye. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const pupil = document.getElementById("pupil");
+
+    // Pupil animation: Follows mouse movement
+    document.addEventListener("mousemove", (e) => {
+      const { clientX: mouseX, clientY: mouseY } = e;
+      const eyeRect = pupil.parentElement.getBoundingClientRect();
+      const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+      const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+
+      const deltaX = (mouseX - eyeCenterX) / eyeRect.width;
+      const deltaY = (mouseY - eyeCenterY) / eyeRect.height;
+
+      pupil.style.transform = `translate(-50%, -50%) translate(${deltaX * 15}px, ${deltaY * 15}px)`;
+    });
+  </script>
+
+</body>
+</html>
