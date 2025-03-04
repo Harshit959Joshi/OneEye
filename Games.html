@@ -31,6 +31,7 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
 
     nav a {
@@ -53,6 +54,61 @@
       font-size: 24px;
       font-weight: 700;
       color: #4CAF50;
+    }
+
+    /* Hamburger Icon */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: #fff;
+      width: 30px;
+      height: 4px;
+      border-radius: 5px;
+    }
+
+    /* Close Menu Button */
+    .close-menu {
+      display: none;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    /* Nav links (for mobile) */
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-links.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      background: #1c1c1c;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .nav-links a {
+      padding: 12px;
+      font-size: 1.2rem;
+      margin: 10px 0;
     }
 
     /* Main content */
@@ -135,10 +191,37 @@
 
     /* Responsive design */
     @media screen and (max-width: 768px) {
-      .about-content {
-        font-size: 16px;
+      /* Hide navigation by default in mobile */
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #1c1c1c;
+        padding: 20px;
+        z-index: 100;
       }
-      
+
+      /* When the menu is open, display the links */
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .close-menu {
+        display: block;
+      }
+
+      .hamburger {
+        display: block; /* Show hamburger when menu is not active */
+      }
+
+      /* Set logo size and font-size for small screens */
       h1 {
         font-size: 36px;
       }
@@ -152,7 +235,7 @@
       .about-content {
         font-size: 14px;
       }
-      
+
       h1 {
         font-size: 28px;
       }
@@ -172,19 +255,25 @@
   <!-- Navigation -->
   <nav>
     <div class="logo">OneEye Games</div>
-    <div>
-      <a href="index.html">Home</a>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links">
+      <a href=index.html">Home</a>
       <a href="About.html">About</a>
       <a href="Gallery.html">Gallery</a>
       <a href="Contact.html">Contact Us</a>
       <a href="Blog.html">Blog</a>
       <a href="News.html">News</a>
     </div>
+    <button class="close-menu" onclick="closeMenu()">&#10005;</button>
   </nav>
 
   <div class="container">
     <h1>Welcome to OneEye Games</h1>
-    <h2>Your Ultimate Gaming Experience</h2>
+    <h2>Ultimate Gaming Experience</h2>
 
     <div class="about-content">
       <p><strong>Game 1:</strong> <a href="Shape Matching.html" class="game-button">Try</a></p>
@@ -197,6 +286,30 @@
   <footer>
     <p>&copy; 2025. OneEye Games. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    // Toggle the mobile menu
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const closeBtn = document.querySelector('.close-menu');
+      const hamburgerIcon = document.querySelector('.hamburger');
+
+      navLinks.classList.toggle('active');
+      closeBtn.style.display = 'block'; // Show close button
+      hamburgerIcon.style.display = 'none'; // Hide hamburger when menu is active
+    }
+
+    // Close the mobile menu when the close button is clicked
+    function closeMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const closeBtn = document.querySelector('.close-menu');
+      const hamburgerIcon = document.querySelector('.hamburger');
+
+      navLinks.classList.remove('active');
+      closeBtn.style.display = 'none'; // Hide close button
+      hamburgerIcon.style.display = 'block'; // Show hamburger again
+    }
+  </script>
 
 </body>
 </html>
