@@ -49,7 +49,93 @@
       color: #121212;
     }
 
+    .nav-links {
+      display: flex;
+    }
+
+    .close-menu {
+      display: none;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
     /* Container */
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: #fff;
+      width: 30px;
+      height: 4px;
+      border-radius: 5px;
+    }
+
+    /* Mobile Menu */
+    @media screen and (max-width: 768px) {
+      nav .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background: #1c1c1c;
+        padding: 20px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 100;
+      }
+
+      nav .nav-links.active {
+        display: flex;
+      }
+
+      nav a {
+        margin: 10px 0;
+        padding: 12px;
+        font-size: 1.2rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .close-menu {
+        display: block;
+      }
+    }
+
+    footer {
+      background-color: #1c1c1c;
+      color: #bbb;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    /* Content */
     .container {
       text-align: center;
       padding: 50px 20px;
@@ -68,7 +154,6 @@
       margin-bottom: 30px;
     }
 
-    /* Blog Section */
     .blog-posts {
       max-width: 900px;
       margin: 0 auto;
@@ -107,20 +192,6 @@
       color: #4CAF50;
     }
 
-    footer {
-      background-color: #1c1c1c;
-      color: #bbb;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-
-    footer a {
-      color: #4CAF50;
-      text-decoration: none;
-    }
-
     /* Responsive Layout */
     @media screen and (max-width: 768px) {
       h1 {
@@ -155,7 +226,12 @@
 
   <!-- Navigation -->
   <nav>
-    <div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="About.html">About</a>
       <a href="Gallery.html">Gallery</a>
@@ -163,6 +239,7 @@
       <a href="Games.html">Games</a>
       <a href="News.html">News</a>
     </div>
+    <button class="close-menu" onclick="closeMenu()">&#10005;</button>
   </nav>
 
   <!-- Content -->
@@ -181,53 +258,39 @@
         </p>
       </div>
 
-      <!-- Blog Post 3 -->
+      <!-- Blog Post 2 -->
       <div class="blog-post">
         <h3>Gaming with OneEye</h3>
         <p>
-            <h4>Gaming with One Eye: Embracing Challenges and Enhancing the Experience</h4>
-            <br>
-            <p>Gaming has long been a popular form of entertainment, offering immersive experiences through beautiful graphics, captivating storylines, and intricate gameplay. But what happens when you're gaming with one eye? Whether by choice or due to a vision impairment, gaming with one eye brings a unique perspective to the table.</p>
-            <br>
-            <h4>A Different Kind of Challenge:</h4>
-            <Br>
-            <p>Gaming typically relies heavily on depth perception—being able to gauge distances and the 3D space around you. This is where vision in both eyes, or <em>binocular vision</em>, comes into play. Depth perception allows players to intuitively judge how far or close something is and react accordingly. When gaming with one eye, that depth perception is compromised, which can make certain games, particularly first-person shooters or action-packed games, more challenging.</p>
-            
-            <p>For some players, the absence of depth perception means that adjusting to the way enemies approach, understanding distances, and dodging in-game projectiles may require extra focus and skill. However, this challenge also opens up room for creative strategies. Players may develop more deliberate movements, rely on other in-game cues like sound or shadows, and become masters of spatial awareness in their own way.</p>
-            <Br>
-            <h4>The Role of Adaptation:</h4>
-            <Br>
-            <p>Fortunately, there are ways to adapt. Many modern video games offer customizable controls and settings that allow players to fine-tune their experience, making it more accessible for those with a variety of vision needs. Some games may provide a "mono mode" (flattening the stereo sound to simulate the single-eye experience) or offer visual cues like larger text or higher contrast to help players with one-eye vision track movement and objectives.</p>
-            
-            <p>Players who game with one eye often become experts at adapting their strategies. For example, in games with a first-person perspective, such as <em>Call of Duty</em> or <em>Overwatch</em>, players may need to adjust their positioning to avoid relying too heavily on peripheral vision. They may learn to use sound or minimize quick movements to focus on key targets, giving them a better edge despite the limitation.</p>
-            <Br>
-            <h4>The Community of One-Eyed Gamers:</h4>
-            <Br>
-            <p>There’s an unspoken bond among gamers who have faced similar challenges. The gaming community, known for being inclusive and welcoming, has room for players with different abilities. Online forums, blogs, and even streamers who game with one eye have started to share tips, tricks, and their personal experiences. Some even specialize in helping others adapt to the challenges they face.</p>
+          <h4>Gaming with One Eye: Embracing Challenges and Enhancing the Experience</h4>
+          <br>
+          <p>Gaming has long been a popular form of entertainment, offering immersive experiences through beautiful graphics, captivating storylines, and intricate gameplay. But what happens when you're gaming with one eye? Whether by choice or due to a vision impairment, gaming with one eye brings a unique perspective to the table.</p>
+          <br>
+          <h4>A Different Kind of Challenge:</h4>
+          <br>
+          <p>Gaming typically relies heavily on depth perception—being able to gauge distances and the 3D space around you. This is where vision in both eyes, or <em>binocular vision</em>, comes into play. Depth perception allows players to intuitively judge how far or close something is and react accordingly. When gaming with one eye, that depth perception is compromised, which can make certain games, particularly first-person shooters or action-packed games, more challenging.</p>
+          
+          <p>For some players, the absence of depth perception means that adjusting to the way enemies approach, understanding distances, and dodging in-game projectiles may require extra focus and skill. However, this challenge also opens up room for creative strategies. Players may develop more deliberate movements, rely on other in-game cues like sound or shadows, and become masters of spatial awareness in their own way.</p>
+          <br>
+          <h4>The Role of Adaptation:</h4>
+          <br>
+          <p>Fortunately, there are ways to adapt. Many modern video games offer customizable controls and settings that allow players to fine-tune their experience, making it more accessible for those with a variety of vision needs. Some games may provide a "mono mode" (flattening the stereo sound to simulate the single-eye experience) or offer visual cues like larger text or higher contrast to help players with one-eye vision track movement and objectives.</p>
+          
+          <p>Players who game with one eye often become experts at adapting their strategies. For example, in games with a first-person perspective, such as <em>Call of Duty</em> or <em>Overwatch</em>, players may need to adjust their positioning to avoid relying too heavily on peripheral vision. They may learn to use sound or minimize quick movements to focus on key targets, giving them a better edge despite the limitation.</p>
+          <br>
+          <h4>The Community of One-Eyed Gamers:</h4>
+          <br>
+          <p>There’s an unspoken bond among gamers who have faced similar challenges. The gaming community, known for being inclusive and welcoming, has room for players with different abilities. Online forums, blogs, and even streamers who game with one eye often share tips, tricks, and strategies that can help others level up their experience.</p>
+          
+          <p>So, whether you’re a competitive player or someone who simply enjoys immersive worlds, gaming with one eye is not just about overcoming an obstacle—it’s about embracing the unique challenge and making it your own. The world of gaming is vast, and there’s a place for everyone, no matter how you experience it.</p>
+        </p>
+      </div>
 
-            <p>Additionally, platforms like Twitch and YouTube have allowed gamers with one eye to create content, offering insights into their unique playstyles. It's not uncommon to see a gamer on a live stream openly talk about their experiences gaming with one eye, offering an inspiring perspective to others who might be facing the same situation.</p>
-            <Br>
-            <h4>Gaming Hardware for Better Accessibility:</h4>
-            <Br>
-            <p>Tech companies are always improving the accessibility of gaming hardware. For gamers with one eye, customizing the way you see and interact with the game world is more achievable than ever. A few notable developments include:</p>
-
-            <ul>
-                 <li><strong>VR Headsets with Adjustment Features:</strong> Virtual reality can offer immersive experiences, but it may also present challenges to one-eyed gamers. Luckily, many VR headsets allow users to adjust the focal length or focus for a single eye, making VR accessible to more players.</li><br>
-                 <li><strong>Adaptive Controllers:</strong> Xbox and PlayStation have introduced adaptive controllers that cater to people with different needs, ensuring that gaming can be enjoyed regardless of ability. While these controllers may not directly impact vision, they can be a game-changer for players with limited mobility.</li><br>
-                 <li><strong>Monocular Display Settings:</strong> Some modern gaming monitors and consoles feature the ability to tweak visuals so that they’re optimized for single-eye usage. This can include adjusting the field of view, contrast, or clarity to make the experience more enjoyable.</li><br>
-           </ul>
-            <br>
-            <h4>Mental and Physical Benefits of Gaming with One Eye:</h4>
-            <br>
-            <p>While the challenges of gaming with one eye are evident, there are also surprising benefits to the practice. Many one-eyed gamers report heightened focus and better spatial awareness as they have trained themselves to maximize their other senses. Relying on sound cues, hand-eye coordination, and spatial reasoning can make the overall gaming experience feel more immersive and intuitive.</p>
-
-            <p>Furthermore, gaming can be a great mental workout. Strategies that players develop to compensate for their vision limitation can improve problem-solving skills, memory, and concentration. The satisfaction of overcoming the unique challenge of gaming with one eye can lead to a sense of achievement and build resilience.</p>
-            <br>
-            <h4>The Bottom Line:</h4>
-            <br>
-            <p>Gaming with one eye may require players to think outside the box and adapt their techniques, but it also offers an opportunity to hone new skills, interact with an inclusive gaming community, and take part in experiences that many would consider impossible. For those who game with one eye, it’s about finding new ways to navigate the digital world, embracing the challenges that come along with it, and proving that, no matter the obstacles, gaming is for everyone.</p>
-
-            
+      <!-- Blog Post 3 -->
+      <div class="blog-post">
+        <h3>Exploring New Horizons</h3>
+        <p>
+          The world of technology is evolving at an astonishing pace. Virtual reality, augmented reality, and AI are changing the way we live, work, and play. In this post, we’ll dive deep into the trends that are shaping our future and how they’re changing our perspective on everything from entertainment to education.
         </p>
       </div>
 
@@ -238,6 +301,20 @@
   <footer>
     <p>&copy; 2025. OneEye. All Rights Reserved. | <a href="Contact.html">Contact Us</a></p>
   </footer>
+
+  <script>
+    // Toggle Mobile Menu
+    function toggleMenu() {
+      const menu = document.querySelector('.nav-links');
+      menu.classList.toggle('active');
+    }
+    
+    // Close the menu when the close button (cross) is clicked
+    function closeMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.remove('active');
+    }
+  </script>
 
 </body>
 </html>
