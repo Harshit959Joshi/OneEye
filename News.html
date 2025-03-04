@@ -49,6 +49,39 @@
       color: #121212;
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: #fff;
+      width: 30px;
+      height: 4px;
+      border-radius: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .close-menu {
+      display: none;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
     /* Container */
     .container {
       text-align: center;
@@ -123,6 +156,37 @@
 
     /* Responsive Layout */
     @media screen and (max-width: 768px) {
+      nav .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background: #1c1c1c;
+        padding: 20px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 100;
+      }
+
+      nav .nav-links.active {
+        display: flex;
+      }
+
+      nav a {
+        margin: 10px 0;
+        padding: 12px;
+        font-size: 1.2rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .close-menu {
+        display: block;
+      }
+
       h1 {
         font-size: 2.5rem;
       }
@@ -155,14 +219,21 @@
 
   <!-- Navigation -->
   <nav>
-    <div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="About.html">About</a>
       <a href="Gallery.html">Gallery</a>
       <a href="Contact.html">Contact Us</a>
       <a href="Games.html">Games</a>
       <a href="Blog.html">Blog</a>
+      <a href="News.html">News</a>
     </div>
+    <button class="close-menu" onclick="closeMenu()">&#10005;</button>
   </nav>
 
   <!-- Content -->
@@ -204,6 +275,20 @@
   <footer>
     <p>&copy; 2025. OneEye. All Rights Reserved. | <a href="Contact.html">Contact Us</a></p>
   </footer>
+
+  <script>
+    // Toggle the mobile menu
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+
+    // Close the menu when the close button (cross) is clicked
+    function closeMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.remove('active');
+    }
+  </script>
 
 </body>
 </html>
